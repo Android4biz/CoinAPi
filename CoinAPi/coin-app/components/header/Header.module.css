@@ -1,0 +1,25 @@
+
+.block__input {
+    width: 360px;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.input {
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+}
+
+.search {
+    width: 40px;
+    height: 44px;
+    border-radius: 5px;
+    background: url('../../public/assets/Vector.png') no-repeat;
+    background-color: #DFE2E4;
+    background-position: center;
+    margin: 0 0 0 10px;
+}

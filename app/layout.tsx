@@ -1,4 +1,7 @@
-import { Metadata } from 'next';
+'use client'
+import { Metadata } from "next";
+import Providers from './store/provider'
+import {store} from "./store";
 
 export const metadata: Metadata = {
 	title: "My App",
@@ -12,7 +15,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>{children}</body>
+			<body>
+				<Providers store={store}>
+					{children}
+				</Providers>
+			</body>
 		</html>
 	);
 }

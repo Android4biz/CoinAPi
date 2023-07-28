@@ -1,8 +1,9 @@
 "use client";
-import {useEffect,useState} from "react";
-import {useSelector} from 'react-redux';
-import {Pagination} from "../pagination/Pagination";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Pagination } from "../pagination/Pagination";
 import style from "./CoinsApi.module.scss";
+import { HeaderCoin } from "../../header/Header";
 
 let PageSize: number = 10;
 
@@ -16,12 +17,14 @@ let PageSize: number = 10;
 export function CoinsApi(): JSX.Element {
 	const [apiName, setApiName] = useState<T[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	
-	const filterCoins = useSelector(state => state.filter.filter)
+
+	const filterCoins = useSelector((state) => state.filter.filter);
+	// console.log(apiName, "coins <<<---")
 
 	const handlePageChange = (currentPage): void => {
 		setCurrentPage(currentPage);
 	};
+
 	useEffect(() => {
 		const Request = async (): Promise<T> => {
 			const data = await (
@@ -44,14 +47,33 @@ export function CoinsApi(): JSX.Element {
 	return (
 		<div>
 			<ul className={style.items}>
-				{apiName.map((el) => (
-					<div className={style.block__list}>
-						<li
-							className={style.item__list}	
-						>{el.name}<div>Current Price: {el.current_price}</div></li>
-						<img src={`${el.image}`} className={style.back__img}></img>
-					</div>
-				))}
+				{!filterCoins
+					? apiName.map((el) => (
+							<div className={style.block__list}>
+								<li className={style.item__list}>
+									{el.name}
+									<div>Current Price: {el.current_price}</div>
+								</li>
+								<img
+									src={`${el.image}`}
+									className={style.back__img}
+								></img>
+							</div>
+					  ))
+					: apiName.map((el) =>
+							el.name === filterCoins ? (
+								<div id={el.id} className={style.block__list}>
+									{el.name}
+									<div>{el.current_price}</div>
+									<img
+										src={`${el.image}`}
+										className={style.back__img}
+									></img>
+								</div>
+							) : (
+								""
+							)
+					  )}
 				<Pagination
 					value={apiName}
 					currentPage={currentPage}

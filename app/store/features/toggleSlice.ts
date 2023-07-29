@@ -1,18 +1,18 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    completed: false
+    toggle: false
 }
 
 const toggleSliceCoin = createSlice({
     name: 'toggle',
     initialState,
     reducers: {
-        toggle(state) {
-            state.completed = !state.completed
+        toggleCoins(state) {
+            state.toggle = !state.toggle
         }
     }
 })
 
-export const { toggle } = toggleSliceCoin.actions
+export const { toggleCoins } = toggleSliceCoin.actions
 export default toggleSliceCoin.reducer

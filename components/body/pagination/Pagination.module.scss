@@ -1,10 +1,13 @@
-
-.pagination__item{
+.pagination__item {
   display: flex;
   list-style-type: none;
   margin: 5px;
 }
 
 .pagination__list {
+  width: 360px;
   display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 0;
 }

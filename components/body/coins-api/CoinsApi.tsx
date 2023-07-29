@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Pagination } from "../pagination/Pagination";
 import style from "./CoinsApi.module.scss";
-import { HeaderCoin } from "../../header/Header";
 
 let PageSize: number = 10;
 
@@ -14,16 +13,33 @@ let PageSize: number = 10;
 // 	{ur: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=etc", completed: false},
 // ]
 
+// const FILTER_MAP = {
+//   USD: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+//   EUR: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur",
+// };
+
+// console.log(Object.keys(FILTER_MAP).map(el => el))
+
 export function CoinsApi(): JSX.Element {
-	const [apiName, setApiName] = useState<T[]>([]);
+	const [apiName, setApiName] = useState([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [fullData, setFullData] = useState([]);
 
 	const filterCoins = useSelector((state) => state.filter.filter);
-	// console.log(apiName, "coins <<<---")
+	// console.log(filterCoins, "coins <<<---")
+	// const filterUrlCoins = Object.keys(FILTER_MAP).filter(item => item === filterCoins)
+	// console.log(filterUrlCoins.join().toLowerCase(), 'urls === coins <<<---')
 
 	const handlePageChange = (currentPage): void => {
 		setCurrentPage(currentPage);
 	};
+
+	// const switchUrl = (filterUrlCoins) => {
+	// 	if(filterUrlCoins === 'EUR') {
+	// 		return `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur`
+	// 	}
+	// 	return `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd`
+	// }
 
 	useEffect(() => {
 		const Request = async (): Promise<T> => {
@@ -40,12 +56,13 @@ export function CoinsApi(): JSX.Element {
 				lastPageIndex
 			);
 			setApiName(dataSlice);
+			setFullData(data);
 		};
 		Request();
 	}, [currentPage]);
 
 	return (
-		<div>
+		<div className={style.block__items}>
 			<ul className={style.items}>
 				{!filterCoins
 					? apiName.map((el) => (
@@ -60,8 +77,8 @@ export function CoinsApi(): JSX.Element {
 								></img>
 							</div>
 					  ))
-					: apiName.map((el) =>
-							el.name === filterCoins ? (
+					: fullData.map((el) =>
+							el.name.toLowerCase() === filterCoins.toLowerCase() ? (
 								<div id={el.id} className={style.block__list}>
 									{el.name}
 									<div>{el.current_price}</div>

@@ -1,33 +1,40 @@
-import style from './Coins.module.scss'
-import { useSelector, useDispatch } from "react-redux";
+import style from "./Coins.module.scss";
 import { useState } from 'react'
-// import {setFilter} from '../../../app/store/features/filterSlice';
+import { toggleCoins } from '../../../app/store/features/toggleSlice'
+import { setFilter } from '../../../app/store/features/filterSlice'
+import {useDispatch, useSelector} from "react-redux";
 
 export function CoinsCrypto(): JSX.Element {
 
-    // const [value, setValue] = useState('')
+  const [value, setValue] = useState('')
+  const [tgl, setTgl] = useState(false)
+  
+  const dispatch = useDispatch()
+  // const toggleFnState = useSelector(state => state.toggle.toggle)
+  // const filterFnState = useSelector(state => state.filter.filter)
+  // console.log(toggleFnState, 'this toggle <<<---')
+  // console.log(value, 'this value <<<---')
+  // console.log(filterFnState, 'this filterFnState <<<---')
 
-    // const dispatch = useDispatch()
-    // const filterCoins = useSelector(state => state.filter.filter)
-    // console.log(filterCoins, 'fcoins')
-    // const handleChange = (e) => {
-    //     setValue(e.target.value)
-    //     dispatch(setFilter(e.target.value))
-    // }
+  const handleChange = (e): void => {
+    setValue(e.target.value)
+  }
 
-    return (
-        <div className={style.coins__select}>
-            <h3 className={style.title}>Coins</h3>
-            <select
-                className={style.select}
-                // onChange={handleChange}
-            >
-                <option>All</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>JPY</option>
-                <option>ETC</option>
-            </select>
-        </div>
-    )
+  const handleClick = (e) => {
+    // setTgl(!tgl)
+    // console.log(dispatch(toggleCoins(tgl)))
+    dispatch(setFilter(value))
+  }
+
+	return (
+		<div className={style.coins__select}>
+			<h3 className={style.title}>Coins</h3>
+			<select className={style.select} onChange={handleChange}>
+				<option onClick={handleClick}>USD</option>
+				<option onClick={handleClick} >EUR</option>
+				<option onClick={handleClick}>JPY</option>
+				<option onClick={handleClick}>ETC</option>
+			</select>
+		</div>
+	);
 }

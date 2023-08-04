@@ -1,24 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Pagination } from "../pagination/Pagination";
 import style from "./CoinsApi.module.scss";
 
 let PageSize: number = 10;
-
-// const REQUEST_CHOICE = [
-// 	{ur: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", completed: false},
-// 	{ur: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur", completed: false},
-// 	{ur: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=jpy", completed: false},
-// 	{ur: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=etc", completed: false},
-// ]
-
-// const FILTER_MAP = {
-//   USD: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
-//   EUR: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur",
-// };
-
-// console.log(Object.keys(FILTER_MAP).map(el => el))
 
 export function CoinsApi(): JSX.Element {
 	const [apiName, setApiName] = useState([]);
@@ -26,40 +12,31 @@ export function CoinsApi(): JSX.Element {
 	const [fullData, setFullData] = useState([]);
 
 	const filterCoins = useSelector((state) => state.filter.filter);
-	// console.log(filterCoins, "coins <<<---")
-	// const filterUrlCoins = Object.keys(FILTER_MAP).filter(item => item === filterCoins)
-	// console.log(filterUrlCoins.join().toLowerCase(), 'urls === coins <<<---')
+	const filterSelectCoins = useSelector((state) => state.selectCoins.option)
 
-	const handlePageChange = (currentPage): void => {
+	const handlePageChange = (currentPage: number): void => {
 		setCurrentPage(currentPage);
 	};
 
-	// const switchUrl = (filterUrlCoins) => {
-	// 	if(filterUrlCoins === 'EUR') {
-	// 		return `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur`
-	// 	}
-	// 	return `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd`
-	// }
+	const Request = async () => {
+		const data = await (
+			await fetch(
+				`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${filterSelectCoins}`
+			)
+		).json();
+		const firstPageIndex = (currentPage - 1) * PageSize;
+		const lastPageIndex = firstPageIndex + Math.floor(data.length / 10);
+		const dataSlice = data.slice(
+			firstPageIndex,
+			lastPageIndex
+		);
+		setApiName(dataSlice);
+		setFullData(data);
+	};
 
 	useEffect(() => {
-		const Request = async (): Promise<T> => {
-			const data = await (
-				await fetch(
-					`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd`
-				)
-			).json();
-			const firstPageIndex = (currentPage - 1) * PageSize;
-			const lastPageIndex = firstPageIndex + Math.floor(data.length / 10);
-			// const lastPageIndex = firstPageIndex + PageSize
-			const dataSlice: number[] = data.slice(
-				firstPageIndex,
-				lastPageIndex
-			);
-			setApiName(dataSlice);
-			setFullData(data);
-		};
-		Request();
-	}, [currentPage]);
+		Request()
+	}, [currentPage, filterSelectCoins]);
 
 	return (
 		<div className={style.block__items}>

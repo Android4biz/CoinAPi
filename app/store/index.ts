@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
 import filterReducer from '../store/features/filterSlice'
-import toggleReducer from '../store/features/toggleSlice'
+import selectReducer from './features/filterSelectSlice'
 
 export const store = configureStore({
     reducer: {
         filter: filterReducer,
-        toggle: toggleReducer
+        selectCoins: selectReducer
     },
 });

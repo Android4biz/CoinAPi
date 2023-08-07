@@ -26,9 +26,9 @@ export function CoinsCrypto(): JSX.Element {
 				onChange={handleChange}
 				value={value}
 			>
-				<option onClick={handleClick}>USD</option>
-				<option onClick={handleClick}>EUR</option>
-				<option onClick={handleClick}>JPY</option>
+				<option onClick={handleClick} className={style.option__item}>USD</option>
+				<option onClick={handleClick} className={style.option__item}>EUR</option>
+				<option onClick={handleClick} className={style.option__item}>JPY</option>
 			</select>
 		</div>
 	);

@@ -45,8 +45,8 @@ export function CoinsApi(): JSX.Element {
 					? apiName.map((el) => (
 							<div className={style.block__list}>
 								<li className={style.item__list}>
-									{el.name}
-									<div>Current Price: {el.current_price}</div>
+									<div className={style.name__element}>{el.name}</div>
+									<div className={style.name__element}>Current Price: {el.current_price}</div>
 								</li>
 								<img
 									src={`${el.image}`}
@@ -57,8 +57,8 @@ export function CoinsApi(): JSX.Element {
 					: fullData.map((el) =>
 							el.name.toLowerCase() === filterCoins.toLowerCase() ? (
 								<div id={el.id} className={style.block__list}>
-									{el.name}
-									<div>{el.current_price}</div>
+									<div className={style.name__element}>{el.name}</div>
+									<div className={style.name__element}>{el.current_price}</div>
 									<img
 										src={`${el.image}`}
 										className={style.back__img}

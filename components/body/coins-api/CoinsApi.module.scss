@@ -8,19 +8,27 @@
   margin: 0;
   .block__list {
     width: 360px;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
+    background: #FFFFFF;
+    border-radius: 8px;
     .item__list {
         list-style-type: none;
     }
   }
 }
 
+.name__element {
+  margin-left: 10px;
+}
+
 .back__img {
   width: 50px;
   height: 50px;
+  margin-right: 10px;
 }
 
 .pagination__bar {

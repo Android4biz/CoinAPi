@@ -10,7 +10,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }: props) => 
 		<ul className={style.pagination__list}>
 			{pageRange.map((page) => (
 				<li key={page} onClick={() => onPageChange(page)} className={style.pagination__item}>
-					<button>{page}</button>
+					<button className={style.btn}>{page}</button>
 				</li>
 			))}
 		</ul>

@@ -2,6 +2,16 @@
   display: flex;
   list-style-type: none;
   margin: 5px;
+  .btn {
+    font-family: 'Oswald';
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    text-align: center;
+    background: whitesmoke;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
 
 .pagination__list {
@@ -11,3 +21,4 @@
   margin-top: 20px;
   padding: 0;
 }
+

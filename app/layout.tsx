@@ -2,6 +2,7 @@
 import { Metadata } from "next";
 import Providers from './store/provider'
 import {store} from "./store";
+import style from './layout.module.scss'
 
 export const metadata: Metadata = {
 	title: "My App",
@@ -15,7 +16,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
+			<body className={style.body}>
 				<Providers store={store}>
 					{children}
 				</Providers>

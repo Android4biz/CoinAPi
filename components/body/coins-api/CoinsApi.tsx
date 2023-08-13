@@ -2,7 +2,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Pagination } from "../pagination/Pagination";
+import { ModalCoin } from "../modal/modalCoin";
 import style from "./CoinsApi.module.scss";
+import { toggleClick } from "../../../app/store/features/toggleSlice";
+import { createPortal } from "react-dom";
 
 let PageSize: number = 10;
 
@@ -12,7 +15,11 @@ export function CoinsApi(): JSX.Element {
 	const [fullData, setFullData] = useState([]);
 
 	const filterCoins = useSelector((state) => state.filter.filter);
-	const filterSelectCoins = useSelector((state) => state.selectCoins.option)
+	const filterSelectCoins = useSelector((state) => state.selectCoins.option);
+	const toggleCoins = useSelector((state) => state.toggle.toggle);
+  const toggleCoinsId = useSelector((state) => state.toggle.modalId)
+
+	const dispatch = useDispatch();
 
 	const handlePageChange = (currentPage: number): void => {
 		setCurrentPage(currentPage);
@@ -26,55 +33,67 @@ export function CoinsApi(): JSX.Element {
 		).json();
 		const firstPageIndex = (currentPage - 1) * PageSize;
 		const lastPageIndex = firstPageIndex + Math.floor(data.length / 10);
-		const dataSlice = data.slice(
-			firstPageIndex,
-			lastPageIndex
-		);
+		const dataSlice = data.slice(firstPageIndex, lastPageIndex);
 		setApiName(dataSlice);
 		setFullData(data);
 	};
 
 	useEffect(() => {
-		Request()
+		Request();
 	}, [currentPage, filterSelectCoins]);
 
+	const openClick = (id) => {
+		dispatch(toggleClick(id));
+	};
+
+
 	return (
-		<div className={style.block__items}>
+		<div className={style.block__items} >
 			<ul className={style.items}>
 				{!filterCoins
 					? apiName.map((el) => (
-							<div className={style.block__list}>
-								<li className={style.item__list}>
-									<div className={style.name__element}>{el.name}</div>
-									<div className={style.name__element}>Current Price: {el.current_price}</div>
+            <div className={toggleCoins ? style.block__list_active : style.block__list} key={el.id} onClick={() => openClick(el.id)}>
+                { el.id === toggleCoinsId && toggleCoins ? <ModalCoin id={toggleCoinsId}/> : false }
+								<li className={ toggleCoins ? style.item__list_active : style.item__list} id={el.id}>
+									<div className={style.name__element}>
+										{el.name}
+									</div>
+									<div className={style.name__element}>
+										Current Price: {el.current_price}
+									</div>
 								</li>
 								<img
 									src={`${el.image}`}
-									className={style.back__img}
+									className={toggleCoins ? style.back__img_active : style.back__img}
 								></img>
 							</div>
 					  ))
 					: fullData.map((el) =>
-							el.name.toLowerCase() === filterCoins.toLowerCase() ? (
-								<div id={el.id} className={style.block__list}>
-									<div className={style.name__element}>{el.name}</div>
-									<div className={style.name__element}>{el.current_price}</div>
+							el.name.toLowerCase() ===
+							filterCoins.toLowerCase() ? (
+								<div key={el.id} className={style.block__list}>
+									<div className={style.name__element}>
+										{el.name}
+									</div>
+									<div className={style.name__element}>
+										{el.current_price}
+									</div>
 									<img
 										src={`${el.image}`}
 										className={style.back__img}
 									></img>
 								</div>
-							) : (
-								""
-							)
+              ) : (
+                ''
+              )
 					  )}
-				<Pagination
-					value={apiName}
-					currentPage={currentPage}
-					totalPages={PageSize}
-					onPageChange={handlePageChange}
-				/>
 			</ul>
+			<Pagination
+				value={apiName}
+				currentPage={currentPage}
+				totalPages={PageSize}
+				onPageChange={handlePageChange}
+			/>
 		</div>
 	);
 }

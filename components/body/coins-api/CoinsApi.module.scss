@@ -15,10 +15,20 @@
     margin-top: 15px;
     background: #FFFFFF;
     border-radius: 8px;
+    cursor: pointer;
     .item__list {
         list-style-type: none;
     }
   }
+}
+
+.item__list_active {
+  display: none;
+}
+
+.block__list_active {
+  width: 360px;
+  height: 200px;
 }
 
 .name__element {
@@ -29,6 +39,9 @@
   width: 50px;
   height: 50px;
   margin-right: 10px;
+}
+.back__img_active {
+  display: none;
 }
 
 .pagination__bar {

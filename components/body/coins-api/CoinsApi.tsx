@@ -5,7 +5,6 @@ import { Pagination } from "../pagination/Pagination";
 import { ModalCoin } from "../modal/modalCoin";
 import style from "./CoinsApi.module.scss";
 import { toggleClick } from "../../../app/store/features/toggleSlice";
-import { createPortal } from "react-dom";
 
 let PageSize: number = 10;
 
@@ -53,7 +52,7 @@ export function CoinsApi(): JSX.Element {
 				{!filterCoins
 					? apiName.map((el) => (
             <div className={toggleCoins ? style.block__list_active : style.block__list} key={el.id} onClick={() => openClick(el.id)}>
-                { el.id === toggleCoinsId && toggleCoins ? <ModalCoin id={toggleCoinsId}/> : false }
+                { el.id === toggleCoinsId && toggleCoins ? <ModalCoin id={toggleCoinsId} cap={el.market_cap} valuation={el.fully_diluted_valuation}/> : false }
 								<li className={ toggleCoins ? style.item__list_active : style.item__list} id={el.id}>
 									<div className={style.name__element}>
 										{el.name}

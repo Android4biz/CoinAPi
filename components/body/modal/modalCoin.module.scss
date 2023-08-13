@@ -1,5 +1,28 @@
 .modal__block {
     position: absolute;
-    width: 300px;
-    
+    // width: 300px;
+    left: 425px;
+    top: 100px;
+    // display: flex;
+    // align-items: center;
+}
+
+.modal__img {
+    width: 20px;
+    height: 20px;
+    background: url('../../../public/assets/leftBtn.png') no-repeat center;
+    display: flex;
+    align-items: baseline;
+}
+
+.modal {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .modal__block {
+        width: 200px;
+        left: 75px;
+    }
 }

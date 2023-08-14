@@ -9,12 +9,15 @@ const toggleSlice = createSlice({
     name: 'switch',
     initialState,
     reducers: {
-        toggleClick(state, action) {
+        toggleClickOpen(state, action) {
             state.toggle = !state.toggle
             state.modalId = action.payload
-        }
+        },
+        // toggleClickCLose(state) {
+        //     state.toggle = !state.toggle
+        // }
     }
 })
 
-export const { toggleClick } = toggleSlice.actions
+export const { toggleClickOpen } = toggleSlice.actions
 export default toggleSlice.reducer

@@ -5,18 +5,35 @@ import { Pagination } from "../pagination/Pagination";
 import { ModalCoin } from "../modal/modalCoin";
 import style from "./CoinsApi.module.scss";
 import { toggleClickOpen } from "../../../app/store/features/toggleSlice";
+import { RootState } from '../../../app/store/index'
 
 let PageSize: number = 10;
 
+interface apiTs {
+  id: string,
+  name: string,
+  market_cap: string,
+  fully_diluted_valuation: string,
+  current_price: string
+  image: HTMLImageElement
+}
+
+interface fullTs {
+  name: string,
+  current_price: string,
+  id: string
+  image: HTMLImageElement
+}
+
 export function CoinsApi(): JSX.Element {
 	const [apiName, setApiName] = useState([]);
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [currentPage, setCurrentPage] = useState(1);
 	const [fullData, setFullData] = useState([]);
 
-	const filterCoins = useSelector((state) => state.filter.filter);
-	const filterSelectCoins = useSelector((state) => state.selectCoins.option);
-	const toggleCoins = useSelector((state) => state.toggle.toggle);
-	const toggleCoinsId = useSelector((state) => state.toggle.modalId)
+	const filterCoins = useSelector((state: RootState) => state.filter.filter);
+	const filterSelectCoins = useSelector((state: RootState) => state.selectCoins.option);
+	const toggleCoins = useSelector((state: RootState) => state.toggle.toggle);
+	const toggleCoinsId = useSelector((state: RootState) => state.toggle.modalId);
 
 	const dispatch = useDispatch();
 
@@ -41,18 +58,43 @@ export function CoinsApi(): JSX.Element {
 		Request();
 	}, [currentPage, filterSelectCoins]);
 
-	const openClick = (id) => {
+	const openClick = (id: string): void => {
 		dispatch(toggleClickOpen(id));
 	};
 
 	return (
-		<div className={style.block__items} >
+		<div className={style.block__items}>
 			<ul className={style.items}>
 				{!filterCoins
-					? apiName.map((el) => (
-            <div className={toggleCoins ? style.block__list_active : style.block__list} key={el.id} >
-                { el.id === toggleCoinsId && toggleCoins ? <ModalCoin id={toggleCoinsId} cap={el.market_cap} valuation={el.fully_diluted_valuation} openClick={openClick}/> : false }
-								<li className={ toggleCoins ? style.item__list_active : style.item__list} id={el.id} onClick={() => openClick(el.id)}>
+					? apiName.map((el:apiTs) => (
+							<div
+								className={
+									toggleCoins
+										? style.block__list_active
+										: style.block__list
+								}
+								key={el.id}
+							>
+								{el.id === toggleCoinsId && toggleCoins ? (
+									<ModalCoin
+										id={toggleCoinsId}
+										cap={el.market_cap}
+										valuation={el.fully_diluted_valuation}
+										openClick={openClick}
+										name={el.name}
+									/>
+								) : (
+									false
+								)}
+								<li
+									className={
+										toggleCoins
+											? style.item__list_active
+											: style.item__list
+									}
+									id={el.id}
+									onClick={() => openClick(el.id)}
+								>
 									<div className={style.name__element}>
 										{el.name}
 									</div>
@@ -61,13 +103,17 @@ export function CoinsApi(): JSX.Element {
 									</div>
 								</li>
 								<img
-                  onClick={() => openClick(el.id)}
+									onClick={() => openClick(el.id)}
 									src={`${el.image}`}
-									className={toggleCoins ? style.back__img_active : style.back__img}
+									className={
+										toggleCoins
+											? style.back__img_active
+											: style.back__img
+									}
 								></img>
 							</div>
 					  ))
-					: fullData.map((el) =>
+					: fullData.map((el: fullTs) =>
 							el.name.toLowerCase() ===
 							filterCoins.toLowerCase() ? (
 								<div key={el.id} className={style.block__list}>
@@ -82,9 +128,9 @@ export function CoinsApi(): JSX.Element {
 										className={style.back__img}
 									></img>
 								</div>
-              ) : (
-                ''
-              )
+							) : (
+								""
+							)
 					  )}
 			</ul>
 			<Pagination

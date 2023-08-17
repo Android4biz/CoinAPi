@@ -13,9 +13,6 @@ const toggleSlice = createSlice({
             state.toggle = !state.toggle
             state.modalId = action.payload
         },
-        // toggleClickCLose(state) {
-        //     state.toggle = !state.toggle
-        // }
     }
 })
 

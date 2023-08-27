@@ -2,14 +2,14 @@
   "name": "coin-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://CoinAPi.github.io",
+  "homepage": "https://android4biz.github.io/CoinAPi/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "predeploy": "rm -rf build && npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d next"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",

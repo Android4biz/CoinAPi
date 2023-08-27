@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+.description {
+    width: 300px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 @media (max-width: 900px) {
     .modal__block {
         left: 75px;

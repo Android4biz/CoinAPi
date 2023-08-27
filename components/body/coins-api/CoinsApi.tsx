@@ -78,10 +78,11 @@ export function CoinsApi(): JSX.Element {
 								{el.id === toggleCoinsId && toggleCoins ? (
 									<ModalCoin
 										id={toggleCoinsId}
-										cap={el.market_cap}
-										valuation={el.fully_diluted_valuation}
+										high={el.high_24h}
+										low={el.low_24h}
 										openClick={openClick}
 										name={el.name}
+										current={el.current_price}
 									/>
 								) : (
 									false

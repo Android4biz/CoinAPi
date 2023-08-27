@@ -1,7 +1,13 @@
 import React from "react";
 import style from "./Pagination.module.scss";
 
-export const Pagination = ({ currentPage, totalPages, onPageChange }: props) => {
+interface Props {
+	currentPage: number;
+	totalPages: number;
+	onPageChange: any
+}
+
+export const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
 	const pageRange = [];
 	for (let i = 1; i <= totalPages; i++) {
 		pageRange.push(i);

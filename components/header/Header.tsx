@@ -9,12 +9,12 @@ export function HeaderCoin(): JSX.Element {
 
 	const dispatch = useDispatch();
 
-	const handleChange = (e): void => {
+	const handleChange = (e: {target: {value: React.SetStateAction<string>;};}): void => {
 		setValue(e.target.value);
 		dispatch(setFilter(e.target.value));
 	};
 
-	const handleSubmit = (e): void => {
+	const handleSubmit = (e: {preventDefault: () => void;}): void => {
 		e.preventDefault();
 	};
 

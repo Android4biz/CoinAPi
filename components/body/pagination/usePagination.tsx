@@ -5,6 +5,8 @@ interface usePagin {
 	pageSize: number;
 	siblingCount: number;
 	currentPage: number;
+	totalPageCount: number;
+	range: any;
 }
 
 interface rangetype {
@@ -14,7 +16,7 @@ interface rangetype {
 
 export const DOTS: string = "...";
 
-const range = ({ start, end }: rangetype) => {
+const range = ({ start, end }: rangetype): number[] => {
 	let length = end - start + 1;
 	return Array.from({ length }, (_, idx) => idx + start);
 };
@@ -23,7 +25,8 @@ export const usePagination = ({
 	totalCount,
 	pageSize,
 	siblingCount = 1,
-	currentPage
+	currentPage,
+	range
 }: usePagin) => {
 	const paginationRange = useMemo(() => {
 		const totalPageCount: number = Math.ceil(totalCount / pageSize);

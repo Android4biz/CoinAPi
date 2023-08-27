@@ -9,7 +9,7 @@ export function CoinsCrypto(): JSX.Element {
 
 	const dispatch = useDispatch();
 
-	const handleChange = (e): void => {
+	const handleChange = (e: any): void => {
 		setValue(e.target.value);
 		dispatch(selectCoins(e.target.value));
 	};

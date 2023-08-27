@@ -5,24 +5,26 @@ import { Pagination } from "../pagination/Pagination";
 import { ModalCoin } from "../modal/modalCoin";
 import style from "./CoinsApi.module.scss";
 import { toggleClickOpen } from "../../../app/store/features/toggleSlice";
-import { RootState } from '../../../app/store/index'
+import { RootState } from "../../../app/store/index";
 
 let PageSize: number = 10;
 
 interface apiTs {
-  id: string,
-  name: string,
-  market_cap: string,
-  fully_diluted_valuation: string,
-  current_price: string
-  image: HTMLImageElement
+	id: string;
+	name: string;
+	market_cap: string;
+	fully_diluted_valuation: string;
+	current_price: string;
+	image: HTMLImageElement;
+	high_24h: string;
+	low_24h: string;
 }
 
 interface fullTs {
-  name: string,
-  current_price: string,
-  id: string
-  image: HTMLImageElement
+	name: string;
+	current_price: string;
+	id: string;
+	image: HTMLImageElement;
 }
 
 export function CoinsApi(): JSX.Element {
@@ -31,9 +33,13 @@ export function CoinsApi(): JSX.Element {
 	const [fullData, setFullData] = useState([]);
 
 	const filterCoins = useSelector((state: RootState) => state.filter.filter);
-	const filterSelectCoins = useSelector((state: RootState) => state.selectCoins.option);
+	const filterSelectCoins = useSelector(
+		(state: RootState) => state.selectCoins.option
+	);
 	const toggleCoins = useSelector((state: RootState) => state.toggle.toggle);
-	const toggleCoinsId = useSelector((state: RootState) => state.toggle.modalId);
+	const toggleCoinsId = useSelector(
+		(state: RootState) => state.toggle.modalId
+	);
 
 	const dispatch = useDispatch();
 
@@ -66,7 +72,7 @@ export function CoinsApi(): JSX.Element {
 		<div className={style.block__items}>
 			<ul className={style.items}>
 				{!filterCoins
-					? apiName.map((el:apiTs) => (
+					? apiName.map((el: apiTs) => (
 							<div
 								className={
 									toggleCoins
@@ -135,7 +141,6 @@ export function CoinsApi(): JSX.Element {
 					  )}
 			</ul>
 			<Pagination
-				value={apiName}
 				currentPage={currentPage}
 				totalPages={PageSize}
 				onPageChange={handlePageChange}

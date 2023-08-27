@@ -2,7 +2,7 @@
   "name": "coin-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Android4biz.github.io/CoinAPi",
+  "homepage": "https://CoinAPi.github.io",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

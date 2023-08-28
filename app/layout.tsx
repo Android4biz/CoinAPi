@@ -1,7 +1,6 @@
-'use client'
+// 'use client'
 import { Metadata } from "next";
 import Providers from './store/provider'
-import {store} from "./store";
 import style from './layout.module.scss'
 
 export const metadata: Metadata = {
